@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -21,6 +22,9 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
+import { Button, ButtonGroup } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { FaArrowUp, FaArrowDown, FaThumbsUp, FaCopy, FaTrashAlt } from 'react-icons/fa';
 
 function createData(id, name, calories, fat, carbs, protein) {
   return {
@@ -29,7 +33,7 @@ function createData(id, name, calories, fat, carbs, protein) {
     calories,
     fat,
     carbs,
-    protein,
+    protein
   };
 }
 
@@ -46,7 +50,7 @@ const rows = [
   createData(10, 'Lollipop', 392, 0.2, 98),
   createData(11, 'Marshmallow', 318, 0, 81),
   createData(12, 'Nougat', 360, 19.0, 9),
-  createData(13, 'Oreo', 437, 18.0, 63),
+  createData(13, 'Oreo', 437, 18.0, 63)
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -60,9 +64,7 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
+  return order === 'desc' ? (a, b) => descendingComparator(a, b, orderBy) : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
 // Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
@@ -86,31 +88,30 @@ const headCells = [
     id: 'name',
     numeric: false,
     disablePadding: true,
-    label: 'File Name',
+    label: 'File Name'
   },
   {
     id: 'estimate',
     numeric: true,
     disablePadding: false,
-    label: 'Estimate',
+    label: 'Estimate'
   },
   {
     id: 'status',
     numeric: true,
     disablePadding: false,
-    label: 'Status',
+    label: 'Status'
   },
   {
     id: 'download',
     numeric: true,
     disablePadding: false,
-    label: 'Download',
+    label: 'Download'
   }
 ];
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-    props;
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -125,7 +126,7 @@ function EnhancedTableHead(props) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
-              'aria-label': 'select all desserts',
+              'aria-label': 'select all desserts'
             }}
           />
         </TableCell>
@@ -161,7 +162,7 @@ EnhancedTableHead.propTypes = {
   onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
+  rowCount: PropTypes.number.isRequired
 };
 
 function EnhancedTableToolbar(props) {
@@ -173,27 +174,16 @@ function EnhancedTableToolbar(props) {
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
         ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-        }),
+          bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)
+        })
       }}
     >
       {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
+        <Typography sx={{ flex: '1 1 100%' }} color="inherit" variant="subtitle1" component="div">
           {numSelected} selected
         </Typography>
       ) : (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
+        <Typography sx={{ flex: '1 1 100%' }} variant="h6" id="tableTitle" component="div">
           Nutrition
         </Typography>
       )}
@@ -216,10 +206,10 @@ function EnhancedTableToolbar(props) {
 }
 
 EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
+  numSelected: PropTypes.number.isRequired
 };
 
-export default function EnhancedTable() {
+export function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -253,10 +243,7 @@ export default function EnhancedTable() {
     } else if (selectedIndex === selected.length - 1) {
       newSelected = newSelected.concat(selected.slice(0, -1));
     } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
+      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
     }
     setSelected(newSelected);
   };
@@ -277,28 +264,21 @@ export default function EnhancedTable() {
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const visibleRows = React.useMemo(
-    () =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage,
-      ),
-    [order, orderBy, page, rowsPerPage],
+    () => stableSort(rows, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
+    [order, orderBy, page, rowsPerPage]
   );
+
+  const navigate = useNavigate();
 
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
-          >
+          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}
@@ -328,29 +308,34 @@ export default function EnhancedTable() {
                         color="primary"
                         checked={isItemSelected}
                         inputProps={{
-                          'aria-labelledby': labelId,
+                          'aria-labelledby': labelId
                         }}
                       />
                     </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
-                    >
+                    <TableCell component="th" id={labelId} scope="row" padding="none">
                       {row.name}
                     </TableCell>
-                    <TableCell align="right">{row.calories}</TableCell>
+                    <TableCell align="right">
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          navigate('/estimate/list');
+                        }}
+                      >
+                        Create New
+                      </Button>
+                    </TableCell>
                     <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
+                    <TableCell align="right">
+                      <Button variant="contained">Download</Button>
+                    </TableCell>
                   </TableRow>
                 );
               })}
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height: (dense ? 33 : 53) * emptyRows,
+                    height: (dense ? 33 : 53) * emptyRows
                   }}
                 >
                   <TableCell colSpan={6} />
@@ -369,10 +354,93 @@ export default function EnhancedTable() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
+      <FormControlLabel control={<Switch checked={dense} onChange={handleChangeDense} />} label="Dense padding" />
     </Box>
+  );
+}
+
+function createData1(name, Description, Building_Type, Status, Job, Client, Data, Quate) {
+  return { name, Description, Building_Type, Status, Job, Client, Data, Quate };
+}
+
+const rows1 = [
+  createData1('Q1205', 'United Estimate', 'single storey', 'Draft', '', 'Unassigned 3', 'May 23, 2024', '$0.00'),
+  createData1('Q1035', 'United Estimate', 'single storey', 'Draft', '', 'Unassigned 1', 'May 23, 2024', '$0.00'),
+  createData1('Q1004', 'United Estimate', 'single storey', 'Draft', '', 'Unassigned 2', 'May 23, 2024', '$0.00'),
+  createData1('Q2005', 'United Estimate', 'single storey', 'Draft', '', 'Unassigned 4', 'May 23, 2024', '$0.00'),
+  createData1('Q3405', 'United Estimate', 'single storey', 'Draft', '', 'Unassigned 6', 'May 23, 2024', '$0.00'),
+  createData1('Q3105', 'United Estimate', 'single storey', 'Draft', '', 'Unassigned 7', 'May 23, 2024', '$0.00'),
+  createData1('Q2105', 'United Estimate', 'single storey', 'Draft', '', 'Unassigned 5', 'May 23, 2024', '$0.00')
+];
+
+export function DenseTable() {
+  const [sorting, setSorting] = useState({ column: null, direction: null });
+
+  const handleSort = (columnName) => {
+    setSorting((prevSorting) => ({
+      column: columnName,
+      direction: prevSorting.column === columnName && prevSorting.direction === 'asc' ? 'desc' : 'asc',
+    }));
+  };
+
+  return (
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <TableCell onClick={() => handleSort('name')}>
+              Raf# {sorting.column === 'name' && (sorting.direction === 'asc' ? <FaArrowUp /> : <FaArrowDown />)}
+            </TableCell>
+            <TableCell align="right" onClick={() => handleSort('Description')}>
+              Description {sorting.column === 'Description' && (sorting.direction === 'asc' ? <FaArrowUp /> : <FaArrowDown />)}
+            </TableCell>
+            <TableCell align="right">Building Type</TableCell>
+            <TableCell align="left" onClick={() => handleSort('Status')}>
+              Status {sorting.column === 'Status' && (sorting.direction === 'asc' ? <FaArrowUp /> : <FaArrowDown />)}
+            </TableCell>
+            <TableCell align="right">Job</TableCell>
+            <TableCell align="right">Client</TableCell>
+            <TableCell align="right">Data</TableCell>
+            <TableCell align="right">Quate Total</TableCell>
+            <TableCell align="right"></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows1.sort((a, b) => {
+            if (sorting.direction === 'asc') {
+              return (a[sorting.column]?.localeCompare(b[sorting.column])) || 0;
+            } else {
+              return (b[sorting.column]?.localeCompare(a[sorting.column])) || 0;
+            }
+          }).map((row) => (
+            <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableCell component="th" scope="row">
+                {row.name}
+              </TableCell>
+              <TableCell align="right">{row.Description}</TableCell>
+              <TableCell align="right">{row.Building_Type}</TableCell>
+              <TableCell align="right">{row.Status}</TableCell>
+              <TableCell align="right">{row.Job}</TableCell>
+              <TableCell align="right">{row.Client}</TableCell>
+              <TableCell align="right">{row.Data}</TableCell>
+              <TableCell align="right">{row.Quate}</TableCell>
+              <TableCell align="right">
+                <ButtonGroup variant="contained" aria-label="Basic button group">
+                  <Button style={{ backgroundColor: 'white', color: 'black' }}>
+                    <FaThumbsUp />
+                  </Button>
+                  <Button>
+                    <FaCopy />
+                  </Button>
+                  <Button style={{ backgroundColor: 'red', color: 'white' }}>
+                    <FaTrashAlt />
+                  </Button>
+                </ButtonGroup>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }

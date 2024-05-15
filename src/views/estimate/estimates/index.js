@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row } from 'react-bootstrap';
 
-import EnhancedTable from './table';
+import {EnhancedTable} from '../../../components/table/table';
 
 const Estimates = () => {
   return (
