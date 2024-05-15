@@ -373,7 +373,7 @@ const rows1 = [
   createData1('Q2105', 'United Estimate', 'single storey', 'Draft', '', 'Unassigned 5', 'May 23, 2024', '$0.00')
 ];
 
-export function DenseTable() {
+export function DenseTable({navigate}) {
   const [sorting, setSorting] = useState({ column: null, direction: null });
 
   const handleSort = (columnName) => {
@@ -389,20 +389,20 @@ export function DenseTable() {
         <TableHead>
           <TableRow>
             <TableCell onClick={() => handleSort('name')}>
-              Raf# {sorting.column === 'name' && (sorting.direction === 'asc' ? <FaArrowUp /> : <FaArrowDown />)}
+              Raf# {sorting.direction === 'asc' ? <FaArrowUp /> : <FaArrowDown />}
             </TableCell>
             <TableCell align="right" onClick={() => handleSort('Description')}>
-              Description {sorting.column === 'Description' && (sorting.direction === 'asc' ? <FaArrowUp /> : <FaArrowDown />)}
+              Description {sorting.direction === 'asc' ? <FaArrowUp /> : <FaArrowDown />}
             </TableCell>
             <TableCell align="right">Building Type</TableCell>
             <TableCell align="left" onClick={() => handleSort('Status')}>
-              Status {sorting.column === 'Status' && (sorting.direction === 'asc' ? <FaArrowUp /> : <FaArrowDown />)}
+              Status {sorting.direction === 'asc' ? <FaArrowUp /> : <FaArrowDown />}
             </TableCell>
             <TableCell align="right">Job</TableCell>
             <TableCell align="right">Client</TableCell>
             <TableCell align="right">Data</TableCell>
             <TableCell align="right">Quate Total</TableCell>
-            <TableCell align="right"></TableCell>
+            <TableCell align="right"><Button variant='contained' onClick={()=>navigate("/estimate/create")}>Create Estimate</Button></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
