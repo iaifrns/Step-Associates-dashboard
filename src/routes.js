@@ -127,6 +127,16 @@ const routes = [
       },
       {
         exact: 'true',
+        path: '/estimate/templates',
+        element: lazy(() => import('./views/template/index'))
+      },
+      {
+        exact: 'true',
+        path: '/rates/price-list',
+        element: lazy(() => import('./views/library/index'))
+      },
+      {
+        exact: 'true',
         path: '/estimate/list',
         element: lazy(() => import('./views/estimate/estimates/estimateList/index'))
       },

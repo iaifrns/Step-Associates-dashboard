@@ -44,10 +44,17 @@ const menuItems = {
               id: 'templates',
               title: 'Templates',
               type: 'item',
-              url: '/basic/breadcrumb',
+              url: '/estimate/templates',
               icon: 'feather icon-folder'
             }
           ]
+        },
+        {
+          id: 'library',
+          title: 'Library',
+          type: 'item',
+          icon: 'feather icon-sidebar',
+          url: '/rates/price-list'
         }
       ]
     },

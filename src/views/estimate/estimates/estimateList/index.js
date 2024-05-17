@@ -17,8 +17,8 @@ const EstimateList = () => {
           <div style={{ width: '100%', padding: '8px', display: 'flex', justifyContent: 'space-between' }}>
             <BasicSelect title={'More Details'} />
             <Stack direction={'row'} spacing={2}>
-              <BasicSelect title={'Setting'} />
               <CustomizedInputBase />
+              <BasicSelect title={'Setting'} />
             </Stack>
           </div>
           <DenseTable navigate={navigate} />

@@ -373,13 +373,13 @@ const rows1 = [
   createData1('Q2105', 'United Estimate', 'single storey', 'Draft', '', 'Unassigned 5', 'May 23, 2024', '$0.00')
 ];
 
-export function DenseTable({navigate}) {
+export function DenseTable({ navigate }) {
   const [sorting, setSorting] = useState({ column: null, direction: null });
 
   const handleSort = (columnName) => {
     setSorting((prevSorting) => ({
       column: columnName,
-      direction: prevSorting.column === columnName && prevSorting.direction === 'asc' ? 'desc' : 'asc',
+      direction: prevSorting.column === columnName && prevSorting.direction === 'asc' ? 'desc' : 'asc'
     }));
   };
 
@@ -388,9 +388,7 @@ export function DenseTable({navigate}) {
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell onClick={() => handleSort('name')}>
-              Raf# {sorting.direction === 'asc' ? <FaArrowUp /> : <FaArrowDown />}
-            </TableCell>
+            <TableCell onClick={() => handleSort('name')}>Raf# {sorting.direction === 'asc' ? <FaArrowUp /> : <FaArrowDown />}</TableCell>
             <TableCell align="right" onClick={() => handleSort('Description')}>
               Description {sorting.direction === 'asc' ? <FaArrowUp /> : <FaArrowDown />}
             </TableCell>
@@ -402,41 +400,83 @@ export function DenseTable({navigate}) {
             <TableCell align="right">Client</TableCell>
             <TableCell align="right">Data</TableCell>
             <TableCell align="right">Quate Total</TableCell>
-            <TableCell align="right"><Button variant='contained' onClick={()=>navigate("/estimate/create")}>Create Estimate</Button></TableCell>
+            <TableCell align="right">
+              <Button variant="contained" onClick={() => navigate('/estimate/create')}>
+                Create Estimate
+              </Button>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows1.sort((a, b) => {
-            if (sorting.direction === 'asc') {
-              return (a[sorting.column]?.localeCompare(b[sorting.column])) || 0;
-            } else {
-              return (b[sorting.column]?.localeCompare(a[sorting.column])) || 0;
-            }
-          }).map((row) => (
-            <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component="th" scope="row">
-                {row.name}
+          {rows1
+            .sort((a, b) => {
+              if (sorting.direction === 'asc') {
+                return a[sorting.column]?.localeCompare(b[sorting.column]) || 0;
+              } else {
+                return b[sorting.column]?.localeCompare(a[sorting.column]) || 0;
+              }
+            })
+            .map((row) => (
+              <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component="th" scope="row">
+                  {row.name}
+                </TableCell>
+                <TableCell align="right">{row.Description}</TableCell>
+                <TableCell align="right">{row.Building_Type}</TableCell>
+                <TableCell align="right">
+                  <span style={{ backgroundColor: 'rgba(0,0,0,0.1)', padding: '8px', borderRadius: '40%' }}>{row.Status}</span>
+                </TableCell>
+                <TableCell align="right">{row.Job}</TableCell>
+                <TableCell align="right">{row.Client}</TableCell>
+                <TableCell align="right">{row.Data}</TableCell>
+                <TableCell align="right">{row.Quate}</TableCell>
+                <TableCell align="right">
+                  <ButtonGroup variant="contained" aria-label="Basic button group">
+                    <Button style={{ backgroundColor: 'white', color: 'black' }}>
+                      <FaThumbsUp />
+                    </Button>
+                    <Button>
+                      <FaCopy />
+                    </Button>
+                    <Button style={{ backgroundColor: 'red', color: 'white' }}>
+                      <FaTrashAlt />
+                    </Button>
+                  </ButtonGroup>
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function DynamicTable({ data, title, buttonGroup }) {
+
+  const rowKeys = Object.keys(title);
+
+  return (
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            {Object.values(title).map((items, index) => (
+              <TableCell align="right" key={index}>
+                {items}
               </TableCell>
-              <TableCell align="right">{row.Description}</TableCell>
-              <TableCell align="right">{row.Building_Type}</TableCell>
-              <TableCell align="right">{row.Status}</TableCell>
-              <TableCell align="right">{row.Job}</TableCell>
-              <TableCell align="right">{row.Client}</TableCell>
-              <TableCell align="right">{row.Data}</TableCell>
-              <TableCell align="right">{row.Quate}</TableCell>
-              <TableCell align="right">
-                <ButtonGroup variant="contained" aria-label="Basic button group">
-                  <Button style={{ backgroundColor: 'white', color: 'black' }}>
-                    <FaThumbsUp />
-                  </Button>
-                  <Button>
-                    <FaCopy />
-                  </Button>
-                  <Button style={{ backgroundColor: 'red', color: 'white' }}>
-                    <FaTrashAlt />
-                  </Button>
-                </ButtonGroup>
-              </TableCell>
+            ))}
+            <TableCell align="right"></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.map((row) => (
+            <TableRow key={row} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              {rowKeys.map((items, index) => (
+                <TableCell align="right" key={index}>
+                 <span style={{ width: '100px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{row[items]}</span> 
+                </TableCell>
+              ))}
+              <TableCell align="right">{buttonGroup}</TableCell>
             </TableRow>
           ))}
         </TableBody>

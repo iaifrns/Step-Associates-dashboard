@@ -31,3 +31,16 @@ export function BasicSelect({title}) {
     </Box>
   );
 }
+
+export const CustomSelect = ({title}) => {
+  
+  const selectStyle = { width: '130px', padding: '8px', borderRadius: '4px', fontWeight: 'bold' };
+  return (
+
+    <select style={selectStyle}>
+    <option>{title}</option>
+    <option>select 2</option>
+    <option>select 3</option>
+  </select>
+  )
+}
