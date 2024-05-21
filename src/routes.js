@@ -137,6 +137,11 @@ const routes = [
       },
       {
         exact: 'true',
+        path: '/estimate/create/id',
+        element: lazy(() => import('./views/estimate/estimates/createEstimate/duplexTemplate'))
+      },
+      {
+        exact: 'true',
         path: '/estimate/list',
         element: lazy(() => import('./views/estimate/estimates/estimateList/index'))
       },

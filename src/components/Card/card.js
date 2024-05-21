@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const CustomCard = ({ icon, title, body }) => {
+const CustomCard = ({ icon, title, body, onClick }) => {
   const [isHover, setIsHover] = useState(false);
 
   const customStyle = {
@@ -20,8 +20,25 @@ const CustomCard = ({ icon, title, body }) => {
     setIsHover(false);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      onClick();
+    }
+  };
+
   return (
-    <div style={customStyle} onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseOn}>
+    <div
+      style={customStyle}
+      onMouseLeave={handleMouseLeave}
+      onMouseEnter={handleMouseOn}
+      onClick={() => {
+        onClick();
+      }}
+      onKeyDown={handleKeyDown}
+      onTouchStart={() => onClick()}
+      role="button"
+      tabIndex={'0'}
+    >
       <div style={{ marginBottom: '10px' }}>{icon}</div>
       <h5 style={{ fontWeight: 'bold' }}>{title}</h5>
       <p style={{ color: 'gray' }}>{body}</p>

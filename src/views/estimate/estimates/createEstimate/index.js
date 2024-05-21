@@ -4,8 +4,11 @@ import { DefaultButton } from '../../../../components/button';
 import { Stack } from '@mui/material';
 import { CustomCard } from '../../../../components/Card/card';
 import { FaHome, FaSimCard, FaPlug, FaUtensils } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const CreateEstimate = () => {
+  const navigate = useNavigate();
+
   return (
     <React.Fragment>
       <Row>
@@ -36,21 +39,33 @@ const CreateEstimate = () => {
             icon={<FaSimCard size={64} />}
             title={'Blank'}
             body={'Start from scratch using a blank template. Add your own category or copy from other template.'}
+            onClick={() => {
+              console.log('clicked');
+            }}
           />
           <CustomCard
             icon={<FaHome size={64} />}
             title={'Duplex (Single Storey)'}
             body={'Duplex (Single Storey) template to help speed up the estimation process'}
+            onClick={() => {
+              navigate('/estimate/create/id');
+            }}
           />
           <CustomCard
             icon={<FaPlug size={64} />}
             title={'Extension'}
             body={'Include categories such as preliminaries hire items temporary services surveyors etc.'}
+            onClick={() => {
+              console.log('clicked');
+            }}
           />
           <CustomCard
             icon={<FaUtensils size={64} />}
             title={'Kitchen and Bathroom'}
             body={'Includes categories such as preliminaries, frame carpenter, windows, skylight etc.'}
+            onClick={() => {
+              console.log('clicked');
+            }}
           />
         </Stack>
       </Row>
