@@ -6,6 +6,8 @@ import avatar1 from '../../assets/images/user/avatar-1.jpg';
 import avatar2 from '../../assets/images/user/avatar-2.jpg';
 import avatar3 from '../../assets/images/user/avatar-3.jpg';
 import { CustomCollapse } from '../../components/collapse';
+import { exploreTakeoffsData, setUpData, startManagingData } from '../../data/collapseContainerData';
+import { Reminders } from '../../components/dashbordDisplay/reminders';
 
 const dashSalesData = [
   { title: 'Daily Sales', amount: '$249.95', icon: 'icon-arrow-up text-c-green', value: 50, class: 'progress-c-theme' },
@@ -26,6 +28,8 @@ const DashDefault = () => {
           accordionKey={accordionKey}
           setAccordionKey={setAccordionKey}
           keyValue={1}
+          collapseData={exploreTakeoffsData}
+          isSecondContainer={true}
         />
         <CustomCollapse
           title={'Start managing your job'}
@@ -34,6 +38,7 @@ const DashDefault = () => {
           accordionKey={accordionKey}
           setAccordionKey={setAccordionKey}
           keyValue={2}
+          collapseData={startManagingData}
         />
         <CustomCollapse
           title={'Set up your accounting integration'}
@@ -42,7 +47,13 @@ const DashDefault = () => {
           accordionKey={accordionKey}
           setAccordionKey={setAccordionKey}
           keyValue={3}
+          collapseData={setUpData}
         />
+        <div style={{
+          display: 'flex'
+        }}>
+<Reminders/>
+        </div>
         {dashSalesData.map((data, index) => {
           return (
             <Col key={index} xl={6} xxl={4}>
