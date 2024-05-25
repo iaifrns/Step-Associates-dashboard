@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Row, Col, Card, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import avatar1 from '../../assets/images/user/avatar-1.jpg';
 import avatar2 from '../../assets/images/user/avatar-2.jpg';
 import avatar3 from '../../assets/images/user/avatar-3.jpg';
+import { CustomCollapse } from '../../components/collapse';
 
 const dashSalesData = [
   { title: 'Daily Sales', amount: '$249.95', icon: 'icon-arrow-up text-c-green', value: 50, class: 'progress-c-theme' },
@@ -13,9 +14,35 @@ const dashSalesData = [
 ];
 
 const DashDefault = () => {
+  const [accordionKey, setAccordionKey] = useState(1);
+
   return (
     <React.Fragment>
       <Row>
+        <h3 style={{ fontWeight: 'bold' }}>Welcom to Step Association Ltd</h3>
+        <CustomCollapse
+          title={'Explore Takeoffs and Estimating'}
+          isDone={true}
+          accordionKey={accordionKey}
+          setAccordionKey={setAccordionKey}
+          keyValue={1}
+        />
+        <CustomCollapse
+          title={'Start managing your job'}
+          isDone={false}
+          dropdownMessage="About 9 mins"
+          accordionKey={accordionKey}
+          setAccordionKey={setAccordionKey}
+          keyValue={2}
+        />
+        <CustomCollapse
+          title={'Set up your accounting integration'}
+          isDone={false}
+          dropdownMessage="About 12 mins"
+          accordionKey={accordionKey}
+          setAccordionKey={setAccordionKey}
+          keyValue={3}
+        />
         {dashSalesData.map((data, index) => {
           return (
             <Col key={index} xl={6} xxl={4}>
