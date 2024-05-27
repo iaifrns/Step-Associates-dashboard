@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { createContext, useReducer } from 'react';
 import * as actionType from '../store/actions';
 import { CONFIG } from '../config/constant';
+import { useMediaQuery, useTheme } from '@mui/material';
 
 const initialState = {
   ...CONFIG,
@@ -14,6 +15,9 @@ const { Provider } = ConfigContext;
 const ConfigProvider = ({ children }) => {
   let trigger = [];
   let open = [];
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const [state, dispatch] = useReducer((state, action) => {
     switch (action.type) {
@@ -93,7 +97,7 @@ const ConfigProvider = ({ children }) => {
     }
   }, initialState);
 
-  return <Provider value={{ state, dispatch }}>{children}</Provider>;
+  return <Provider value={{ state, dispatch, isSmallScreen }}>{children}</Provider>;
 };
 
 ConfigProvider.propTypes = {

@@ -1,20 +1,28 @@
 import { Button } from '@mui/material';
 import BasicDateRangePicker from '../datePicker/dateRangePicker';
 import { CustomSelect } from '../select';
+import { Card } from 'react-bootstrap';
+import { useContext } from 'react';
+import { ConfigContext } from '../../contexts/ConfigContext';
 
-const Reminders = () => {
+const Reminders = ({ handleOpen }) => {
+  const { isSmallScreen } = useContext(ConfigContext);
   return (
-    <div
+    <Card
       style={{
-        flex: 1
+        flex: 1,
+        boxShadow: 4,
+        borderRadius: '8px',
+        border: '1px solid lightgray'
       }}
     >
       <div
         style={{
-          padding: '16px'
+          padding: '16px',
+          backgroundColor: 'white'
         }}
       >
-        <h4 style={{ fontWeight: 'bold' }}>REMINDERS</h4>
+        <h5 style={{ fontWeight: 'bold' }}>REMINDERS</h5>
       </div>
       <div
         style={{
@@ -26,14 +34,16 @@ const Reminders = () => {
           backgroundColor: 'rgba(0,0,0,0.05)'
         }}
       >
-        <div style={{ display: 'flex', gap: 4 }}>
+        <div style={{ display: 'flex', flexDirection: isSmallScreen ? 'column' : 'row', gap: 4 }}>
           <BasicDateRangePicker />
-          <CustomSelect title={"Settings"}/>
+          <CustomSelect title={'Settings'} />
         </div>
-        <Button variant='contained'>New Reminder</Button>
-        <p style={{textAlign:'center'}}>No Remider</p>
+        <Button variant="contained" onClick={handleOpen}>
+          New Reminder
+        </Button>
+        <p style={{ textAlign: 'center' }}>No Remider</p>
       </div>
-    </div>
+    </Card>
   );
 };
 

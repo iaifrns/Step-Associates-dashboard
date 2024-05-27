@@ -18,7 +18,7 @@ const menuItems = {
           title: 'Viewer',
           type: 'item',
           icon: 'feather icon-eye',
-          url: ''
+          url: '/forms/form-basic'
         },
         {
           id: 'estimate',
