@@ -122,6 +122,11 @@ const routes = [
       },
       {
         exact: 'true',
+        path: '/estimate/detail',
+        element: lazy(() => import('./views/estimate/estimateDetail'))
+      },
+      {
+        exact: 'true',
         path: '/estimate/create',
         element: lazy(() => import('./views/estimate/estimates/createEstimate/index'))
       },

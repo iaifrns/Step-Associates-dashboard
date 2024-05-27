@@ -1,5 +1,6 @@
 import { Card } from 'react-bootstrap';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const RecentITems = () => {
   const [mouseEnter, setMouseEnter] = useState(false);
@@ -34,6 +35,7 @@ const RecentITems = () => {
           backgroundColor: 'rgba(0,0,0,0.05)'
         }}
       >
+        <Link style={{textDecoration:'none'}} to={"/estimate/detail"}>
         <p
           onMouseEnter={handleOnMouseEnter}
           onMouseLeave={handleOnMouseEnter}
@@ -41,6 +43,7 @@ const RecentITems = () => {
         >
           #Q1003-Untitled Estimate
         </p>
+        </Link>
       </div>
     </Card>
   );
