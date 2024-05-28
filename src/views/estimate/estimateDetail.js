@@ -24,6 +24,22 @@ const EstimateDetail = () => {
           <EstimateVersion/>
         </div>
       </Row>
+      <div style={{ fontWeight: 'bold', padding: '8px' }}>
+        {' '}
+        <span
+          style={{
+            backgroundColor: 'lightskyblue',
+            padding: '2px',
+            paddingLeft: '10px',
+            paddingRight: '10px',
+            borderRadius: '100%',
+            color: 'white'
+          }}
+        >
+          i
+        </span>{' '}
+        Manage Estimate
+      </div>
     </React.Fragment>
   );
 };
