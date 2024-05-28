@@ -4,6 +4,7 @@ import { Row, Col, Card, Form, InputGroup, FormControl, Button } from 'react-boo
 import { FaExchangeAlt } from 'react-icons/fa';
 import { InputFileUpload } from '../button';
 import EstimateVersioningModal from '../modal/estimateVerionModal';
+import AssignedLeadModal from '../modal/assigneLead';
 
 export const FormGrid = () => {
   return (
@@ -175,6 +176,7 @@ export const ClientDetail = ({ isSmallScreen }) => {
 };
 
 export const LeadDetail = () => {
+  const [open, setOpen] = useState(false);
   return (
     <div style={{ width: '100%' }}>
       <Card>
@@ -191,7 +193,7 @@ export const LeadDetail = () => {
                   <FaExchangeAlt style={{ marginRight: '8px' }} />
                 </div>
                 <p style={{ margin: '8px' }}>No lead linked to this estimate</p>
-                <Button color="success" style={{ margin: '8px' }}>
+                <Button color="success" style={{ margin: '8px' }} onClick={()=>setOpen(true)}>
                   Link to a lead
                 </Button>
               </div>
@@ -199,6 +201,7 @@ export const LeadDetail = () => {
           </Form>
         </Card.Body>
       </Card>
+      <AssignedLeadModal open={open} setOpen={setOpen}/>
     </div>
   );
 };
