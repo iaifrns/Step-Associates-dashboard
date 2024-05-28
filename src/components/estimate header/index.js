@@ -1,6 +1,8 @@
 import { Button, Card } from 'react-bootstrap';
 import HeaderSelect from '../select/headerSelect';
 import { FaArrowLeft } from 'react-icons/fa';
+import { Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const ContentHeader = ({ title, desc }) => {
   return (
@@ -15,17 +17,19 @@ const Divider = () => {
   return <div style={{ height: '30px', width: '1px', backgroundColor: 'lightgray' }}></div>;
 };
 
-const MenuContent = ({ text, isActive }) => {
+const MenuContent = ({ text, isActive, onClick = () => {} }) => {
   const color = isActive ? 'green' : 'black';
   const borderBottom = isActive ? '3px solid green' : 'none';
   return (
-    <div style={{ padding: '16px', cursor: 'pointer', color: color, borderBottom: borderBottom }}>
+    <Box onClick={onClick} style={{ padding: '16px', cursor: 'pointer', color: color, borderBottom: borderBottom }}>
       <h6>{text}</h6>
-    </div>
+    </Box>
   );
 };
 
 const EstimateHeader = ({ active }) => {
+  const navigate = useNavigate();
+
   return (
     <>
       <Card>
@@ -46,7 +50,8 @@ const EstimateHeader = ({ active }) => {
             alignItems: 'center',
             borderTop: '1px solid lightgray',
             borderBottom: '1px solid lightgray',
-            padding: '16px', overflow: 'auto'
+            padding: '16px',
+            overflow: 'auto'
           }}
         >
           <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
@@ -60,10 +65,14 @@ const EstimateHeader = ({ active }) => {
           <ContentHeader title={'Quote Total'} desc={'$0.00'} />
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', gap: 16, overflow:'auto' }}>
-            <MenuContent text={'Estimate Details'} isActive={active == 'Estimate Details'} />
+          <div style={{ display: 'flex', gap: 16, overflow: 'auto' }}>
+            <MenuContent text={'Estimate Details'} isActive={active == 'Estimate Details'} onClick={() => navigate('/estimate/detail')} />
             <MenuContent text={'Plans & Takeoffs'} isActive={active == 'Plans & Takeoffs'} />
-            <MenuContent text={'Estimate Costings'} isActive={active == 'Estimate Costings'} />
+            <MenuContent
+              text={'Estimate Costings'}
+              isActive={active == 'Estimate Costings'}
+              onClick={() => navigate('/estimate/costing')}
+            />
             <MenuContent text={'Request for Quotes'} isActive={active == 'Request for Quotes'} />
             <MenuContent text={'Specifications'} isActive={active == 'Specifications'} />
           </div>
