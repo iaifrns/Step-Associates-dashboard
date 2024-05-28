@@ -3,8 +3,9 @@ import { Container, Dropdown, Form } from 'react-bootstrap';
 import { FaCog, FaEdit, FaPrint, FaEnvelope, FaFlag, FaCopy, FaTrash } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Box } from '@mui/material';
+import FeedBackModal from '../../components/modal/feedbackModal';
 
-const Header = ({ handleMultipleSelect }) => {
+const Header = ({ handleMultipleSelect, onClick }) => {
   return (
     <Box display={'flex'} justifyContent={'space-between'}>
       <div style={{ display: 'flex', gap: 24 }}>
@@ -18,7 +19,7 @@ const Header = ({ handleMultipleSelect }) => {
             <Dropdown.Item>Import Items from Excel</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        <span style={{ color: 'lightgreen' }}>Leave Feedback</span>
+        <Box onClick={onClick}><span style={{ color: 'lightgreen', cursor:'pointer' }}>Leave Feedback</span></Box>
       </div>
       <div>
         <Dropdown>
@@ -64,6 +65,7 @@ const DataItem = ({ count, isChecked, handleChecked, data }) => {
 };
 
 const CustomContainer = ({ setEllementChecked }) => {
+    const [open, setOpen] = useState(false);
   const data = [
     {
       id: 1,
@@ -144,10 +146,11 @@ const CustomContainer = ({ setEllementChecked }) => {
 
   return (
     <Container style={{ overflow: 'auto', border: '1px solid lightgray', padding: '16px', borderRadius: '8px' }}>
-      <Header handleMultipleSelect={handleMultipleSelect} />
+      <Header handleMultipleSelect={handleMultipleSelect} onClick={()=>setOpen(true)} />
       {dataSet.map((item, index) => (
         <DataItem key={index} count={index} data={item} isChecked={item.checked} handleChecked={handleSingleSelect} />
       ))}
+      <FeedBackModal open={open} setOpen={setOpen}/>
     </Container>
   );
 };

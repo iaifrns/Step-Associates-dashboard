@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Row, Col, Card, Form, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { FaExchangeAlt } from 'react-icons/fa';
 import { InputFileUpload } from '../button';
+import EstimateVersioningModal from '../modal/estimateVerionModal';
 
 export const FormGrid = () => {
   return (
@@ -266,6 +267,7 @@ export const Document = ({ isSmallScreen }) => {
 };
 
 export const EstimateVersion = ({ isSmallScreen }) => {
+  const [open, setOpen] = useState(false);
   return (
     <div style={{ width: isSmallScreen ? '100%' : '50%' }}>
       <Card>
@@ -282,7 +284,7 @@ export const EstimateVersion = ({ isSmallScreen }) => {
                   <FaExchangeAlt style={{ marginRight: '8px' }} />
                 </div>
                 <p style={{ margin: '8px', width: '100%' }}>No description</p>
-                <Button color="success">
+                <Button color="success" onClick={()=>setOpen(true)}>
                   Capture Version
                 </Button>
               </div>
@@ -290,6 +292,7 @@ export const EstimateVersion = ({ isSmallScreen }) => {
           </Form>
         </Card.Body>
       </Card>
+      <EstimateVersioningModal open={open} setOpen={setOpen} />
     </div>
   );
 };
