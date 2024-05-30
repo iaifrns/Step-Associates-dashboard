@@ -5,11 +5,13 @@ const CustomCard = ({ icon, title, body, onClick }) => {
 
   const customStyle = {
     display: 'flex',
-    flexDirection: 'column',
-    padding: '8px',
-    width: '250px',
+    padding: '16px',
+    width: '100%',
     cursor: 'pointer',
-    backgroundColor: isHover ? 'rgba(0,0,0,0.1)' : 'white'
+    backgroundColor: isHover ? 'rgba(0,0,0,0.1)' : 'white',
+    borderRadius: '4px',
+    border: '1px solid lightgray',
+    justifyContent: 'space-between'
   };
 
   const handleMouseOn = () => {
@@ -39,9 +41,11 @@ const CustomCard = ({ icon, title, body, onClick }) => {
       role="button"
       tabIndex={'0'}
     >
-      <div style={{ marginBottom: '10px' }}>{icon}</div>
-      <h5 style={{ fontWeight: 'bold' }}>{title}</h5>
-      <p style={{ color: 'gray' }}>{body}</p>
+      <div>
+        <h5 style={{ fontWeight: 'bold' }}>{title}</h5>
+        <p style={{ color: 'gray' }}>{body}</p>
+      </div>
+      <div style={{ marginBottom: '10px', color:'rgba(0,0,0,0.3)' }}>{icon}</div>
     </div>
   );
 };

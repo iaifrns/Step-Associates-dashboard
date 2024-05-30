@@ -19,7 +19,9 @@ const Header = ({ handleMultipleSelect, onClick }) => {
             <Dropdown.Item>Import Items from Excel</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        <Box onClick={onClick}><span style={{ color: 'lightgreen', cursor:'pointer' }}>Leave Feedback</span></Box>
+        <Box onClick={onClick}>
+          <span style={{ color: 'lightgreen', cursor: 'pointer' }}>Leave Feedback</span>
+        </Box>
       </div>
       <div>
         <Dropdown>
@@ -48,7 +50,7 @@ const Header = ({ handleMultipleSelect, onClick }) => {
 
 const DataItem = ({ count, isChecked, handleChecked, data }) => {
   return (
-    <div className="mb-3 p-2 border " style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <div className="mb-3 p-2 border " style={{ display: 'flex', justifyContent: 'space-between', cursor: 'pointer' }}>
       <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
         {count}
         <Form.Check type="checkbox" className="mr-3" checked={isChecked} onChange={(event) => handleChecked(event, data.id)} />
@@ -65,7 +67,7 @@ const DataItem = ({ count, isChecked, handleChecked, data }) => {
 };
 
 const CustomContainer = ({ setEllementChecked }) => {
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const data = [
     {
       id: 1,
@@ -146,11 +148,11 @@ const CustomContainer = ({ setEllementChecked }) => {
 
   return (
     <Container style={{ overflow: 'auto', border: '1px solid lightgray', padding: '16px', borderRadius: '8px' }}>
-      <Header handleMultipleSelect={handleMultipleSelect} onClick={()=>setOpen(true)} />
+      <Header handleMultipleSelect={handleMultipleSelect} onClick={() => setOpen(true)} />
       {dataSet.map((item, index) => (
         <DataItem key={index} count={index} data={item} isChecked={item.checked} handleChecked={handleSingleSelect} />
       ))}
-      <FeedBackModal open={open} setOpen={setOpen}/>
+      <FeedBackModal open={open} setOpen={setOpen} />
     </Container>
   );
 };

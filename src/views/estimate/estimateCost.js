@@ -3,6 +3,7 @@ import { Button, Row } from 'react-bootstrap';
 import { EstimateHeader } from '../../components/estimate header';
 import { Box } from '@mui/material';
 import CustomContainer from './estimateCostDataContent';
+import { SideBar } from '../../components/estimateSideBar/sideBar';
 
 const BottomContent = ({ custom = true, title, cost }) => {
   return (
@@ -49,7 +50,7 @@ const EstimateBottom = ({ active }) => {
           <CustomButton text={'+ New Quote Request for 4 items'} />
           <CustomButton text={'Copy 4 items to template'} />
           <CustomButton text={'Move 4 items'} />
-          <Button variant='outline-dark'>Cancel</Button>
+          <Button variant="outline-dark">Cancel</Button>
         </Container>
       ) : (
         <Container>
@@ -79,7 +80,15 @@ const EstimateCost = () => {
           }}
         >
           <EstimateHeader active={'Estimate Costings'} />
-          <CustomContainer setEllementChecked={setAnEllementChecked} />
+          <div
+            style={{
+              display: 'flex',
+              overflow:'auto'
+            }}
+          >
+            <CustomContainer setEllementChecked={setAnEllementChecked} />
+            <SideBar />
+          </div>
           <EstimateBottom active={anEllementChecked} />
         </Box>
       </Row>

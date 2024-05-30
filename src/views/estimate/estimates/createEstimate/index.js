@@ -1,7 +1,6 @@
 import React from 'react';
 import { Row } from 'react-bootstrap';
-import { DefaultButton } from '../../../../components/button';
-import { Stack } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import { CustomCard } from '../../../../components/Card/card';
 import { FaHome, FaSimCard, FaPlug, FaUtensils } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -19,22 +18,22 @@ const CreateEstimate = () => {
         <div
           style={{
             display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            border: '2px dotted gray',
+            flexDirection: 'column',
+            border: '1px solid lightgray',
             width: '95%',
             margin: '16px',
-            padding: '16px'
+            padding: '16px',
+            gap: 16
           }}
         >
-          <span>Create your estimate from scratch or use the default template</span>
+          <h6 style={{fontWeight:'bold'}}>Create your estimate from scratch or use the default template</h6>
           <Stack direction={'row'} spacing={2}>
-            <DefaultButton title={'Create blank estimate'} />
-            <DefaultButton title={'Default template'} />
+            <Button variant='contained'>Create blank estimate</Button>
+            <Button variant='contained'>Default template</Button>
           </Stack>
         </div>
-        <h4 style={{ fontWeight: 'bold', paddingBottom: '16px', marginTop: '24px', marginBottom: '16px' }}>Buildxact template (6)</h4>
-        <Stack direction={'row'} spacing={3}>
+        <h4 style={{ fontWeight: 'bold', paddingBottom: '16px', marginTop: '24px', marginBottom: '16px' }}>Step Associates template (6)</h4>
+        <Stack direction={'column'} spacing={3}>
           <CustomCard
             icon={<FaSimCard size={64} />}
             title={'Blank'}
