@@ -1,5 +1,11 @@
-import { FaLessThan } from 'react-icons/fa';
+import { FaAngleLeft } from 'react-icons/fa';
+import TemporaryDrawer from '../drawer';
+import { VerticalText } from '../Text/verticalText';
+import { useState } from 'react';
+import { Box } from '@mui/material';
 const SideBar = () => {
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState('Catalogues');
   return (
     <div
       style={{
@@ -8,18 +14,30 @@ const SideBar = () => {
         height: '100%',
         gap: 8,
         border: '1px solid lightgray',
-        alignItems:'center'
+        alignItems: 'center',
+        padding: '8px'
       }}
     >
-      <FaLessThan style={{margin : '8px'}} />
-      <Text text={'Catalogues'} />
-      <Text text={'Recipes'} />
+      <FaAngleLeft onClick={() => setOpen(true)} />
+      <Box
+        onClick={() => {
+          setOpen(true);
+          setActive('Catalogues');
+        }}
+      >
+        <VerticalText text={'Catalogues'} />
+      </Box>
+      <Box
+        onClick={() => {
+          setOpen(true);
+          setActive('Recipes');
+        }}
+      >
+        <VerticalText text={'Recipes'} />
+      </Box>
+      <TemporaryDrawer open={open} setOpen={setOpen} active={active} setActive={setActive} />
     </div>
   );
-};
-
-const Text = ({ text }) => {
-  return <p style={{ writingMode: 'vertical-lr', margin: '8px', fontWeight: 'bold' }}>{text}</p>;
 };
 
 export { SideBar };
