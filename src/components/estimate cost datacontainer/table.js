@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import { BsTrash } from 'react-icons/bs';
 import { FiCopy } from 'react-icons/fi'; 
@@ -30,10 +30,17 @@ const data = [
 ];
 
 const MyTable = () => {
+  const [selectedRows, setSelectedRows] = useState([]);
+
+  const handleSelectRow = (index) => {
+    setSelectedRows([...selectedRows, index]);
+  };
+
   return (
     <Table striped bordered hover>
       <thead>
         <tr>
+          <th></th>
           {Object.keys(data[0]).map((key, index) => (
             <th key={index}>{key}</th>
           ))}
@@ -43,8 +50,15 @@ const MyTable = () => {
       <tbody>
         {data.map((item, index) => (
           <tr key={index}>
+            <td>
+              <input 
+                type="checkbox" 
+                checked={selectedRows.includes(index)} 
+                onChange={() => handleSelectRow(index)} 
+              />
+            </td>
             {Object.entries(item).map(([key, value], i) => (
-              <td key={i}>
+              <td key={i} className={(key === "GST" || key === "Quote Total") ? "blue-border" : ""}>
                 {typeof value === "number" && (key.includes("Cost") || key.includes("Total")) ?
                   `$${value.toFixed(2)}`
                   :
