@@ -4,6 +4,7 @@ import { FaCog, FaEdit, FaPrint, FaEnvelope, FaFlag, FaCopy, FaTrash } from 'rea
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Box } from '@mui/material';
 import FeedBackModal from '../../components/modal/feedbackModal';
+import { EstimateDataContainer } from '../../components/estimate cost datacontainer';
 
 const Header = ({ handleMultipleSelect, onClick }) => {
   return (
@@ -48,9 +49,9 @@ const Header = ({ handleMultipleSelect, onClick }) => {
   );
 };
 
-const DataItem = ({ count, isChecked, handleChecked, data }) => {
+const DataItem = ({ count, isChecked, handleChecked, data, onClick }) => {
   return (
-    <div className="mb-3 p-2 border " style={{ display: 'flex', justifyContent: 'space-between', cursor: 'pointer' }}>
+    <Box onClick={onClick} className="mb-3 p-2 border " style={{ display: 'flex', justifyContent: 'space-between', cursor: 'pointer' }}>
       <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
         {count}
         <Form.Check type="checkbox" className="mr-3" checked={isChecked} onChange={(event) => handleChecked(event, data.id)} />
@@ -62,7 +63,7 @@ const DataItem = ({ count, isChecked, handleChecked, data }) => {
         <FaCopy />
         <FaTrash color="red" />
       </div>
-    </div>
+    </Box>
   );
 };
 
@@ -146,11 +147,27 @@ const CustomContainer = ({ setEllementChecked }) => {
     }
   }, [dataSet]);
 
+  const [drop, setDrop] = useState('');
+
+  const handleDropDown = (id) => {
+    setDrop(drop == id ? '' : id);
+  };
+
   return (
     <Container style={{ overflow: 'auto', border: '1px solid lightgray', padding: '16px', borderRadius: '8px' }}>
       <Header handleMultipleSelect={handleMultipleSelect} onClick={() => setOpen(true)} />
       {dataSet.map((item, index) => (
-        <DataItem key={index} count={index} data={item} isChecked={item.checked} handleChecked={handleSingleSelect} />
+        <>
+          <DataItem
+            key={index}
+            count={index}
+            data={item}
+            isChecked={item.checked}
+            handleChecked={handleSingleSelect}
+            onClick={()=>handleDropDown(item.id)}
+          />
+          {drop == item.id && <EstimateDataContainer title={item.name} />}
+        </>
       ))}
       <FeedBackModal open={open} setOpen={setOpen} />
     </Container>
