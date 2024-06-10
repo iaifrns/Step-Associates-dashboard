@@ -454,6 +454,7 @@ export function DenseTable({ navigate }) {
 export function DynamicTable({ data, title, buttonGroup }) {
 
   const rowKeys = Object.keys(title);
+  const navigate = useNavigate();
 
   return (
     <TableContainer component={Paper}>
@@ -472,7 +473,7 @@ export function DynamicTable({ data, title, buttonGroup }) {
           {data.map((row) => (
             <TableRow key={row} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               {rowKeys.map((items, index) => (
-                <TableCell align="right" key={index}>
+                <TableCell align="right" key={index} style={{cursor:'pointer'}} onClick={()=>navigate("/estimate/costing")}>
                  <span style={{ width: '100px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{row[items]}</span> 
                 </TableCell>
               ))}
