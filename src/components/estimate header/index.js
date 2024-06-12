@@ -27,7 +27,7 @@ const MenuContent = ({ text, isActive, onClick = () => {} }) => {
   );
 };
 
-const EstimateHeader = ({ active }) => {
+const EstimateHeader = ({ active, estimate }) => {
   const navigate = useNavigate();
 
   return (
@@ -41,7 +41,7 @@ const EstimateHeader = ({ active }) => {
           }}
         >
           <FaArrowLeft style={{ marginRight: '8px' }} />
-          <HeaderSelect />
+          <HeaderSelect title={estimate.client} status={estimate.status} />
         </div>
         <div
           style={{
@@ -55,14 +55,14 @@ const EstimateHeader = ({ active }) => {
           }}
         >
           <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
-            <ContentHeader title={'Client'} desc={'Unassigned 1'} />
+            <ContentHeader title={'Client'} desc={estimate.client} />
             <Divider />
             <ContentHeader title={'Lead'} desc={'Unassigned'} />
             <Divider />
-            <ContentHeader title={'Ref No'} desc={'Q1003'} />
+            <ContentHeader title={'Ref No'} desc={estimate.id} />
           </div>
 
-          <ContentHeader title={'Quote Total'} desc={'$0.00'} />
+          <ContentHeader title={'Quote Total'} desc={estimate.quateTotal} />
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', gap: 16, overflow: 'auto' }}>

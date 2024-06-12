@@ -25,6 +25,7 @@ import { visuallyHidden } from '@mui/utils';
 import { Button, ButtonGroup } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowUp, FaArrowDown, FaThumbsUp, FaCopy, FaTrashAlt } from 'react-icons/fa';
+import { DataContext } from '../../contexts/DataContext';
 
 function createData(id, name, calories, fat, carbs, protein) {
   return {
@@ -359,22 +360,10 @@ export function EnhancedTable() {
   );
 }
 
-function createData1(name, Description, Building_Type, Status, Job, Client, Data, Quate) {
-  return { name, Description, Building_Type, Status, Job, Client, Data, Quate };
-}
-
-const rows1 = [
-  createData1('Q1205', 'United Estimate', 'single storey', 'Draft', '', 'Unassigned 3', 'May 23, 2024', '$0.00'),
-  createData1('Q1035', 'United Estimate', 'single storey', 'Draft', '', 'Unassigned 1', 'May 23, 2024', '$0.00'),
-  createData1('Q1004', 'United Estimate', 'single storey', 'Draft', '', 'Unassigned 2', 'May 23, 2024', '$0.00'),
-  createData1('Q2005', 'United Estimate', 'single storey', 'Draft', '', 'Unassigned 4', 'May 23, 2024', '$0.00'),
-  createData1('Q3405', 'United Estimate', 'single storey', 'Draft', '', 'Unassigned 6', 'May 23, 2024', '$0.00'),
-  createData1('Q3105', 'United Estimate', 'single storey', 'Draft', '', 'Unassigned 7', 'May 23, 2024', '$0.00'),
-  createData1('Q2105', 'United Estimate', 'single storey', 'Draft', '', 'Unassigned 5', 'May 23, 2024', '$0.00')
-];
-
 export function DenseTable({ navigate }) {
   const [sorting, setSorting] = useState({ column: null, direction: null });
+
+  const {estimates} = React.useContext(DataContext)
 
   const handleSort = (columnName) => {
     setSorting((prevSorting) => ({
@@ -408,7 +397,7 @@ export function DenseTable({ navigate }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows1
+          {estimates
             .sort((a, b) => {
               if (sorting.direction === 'asc') {
                 return a[sorting.column]?.localeCompare(b[sorting.column]) || 0;
@@ -417,19 +406,19 @@ export function DenseTable({ navigate }) {
               }
             })
             .map((row) => (
-              <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {row.id}
                 </TableCell>
-                <TableCell align="right">{row.Description}</TableCell>
-                <TableCell align="right">{row.Building_Type}</TableCell>
+                <TableCell align="right">{row.desc}</TableCell>
+                <TableCell align="right">{row.buildType}</TableCell>
                 <TableCell align="right">
-                  <span style={{ backgroundColor: 'rgba(0,0,0,0.1)', padding: '8px', borderRadius: '40%' }}>{row.Status}</span>
+                  <span style={{ backgroundColor: 'rgba(0,0,0,0.1)', padding: '8px', borderRadius: '40%' }}>{row.status}</span>
                 </TableCell>
-                <TableCell align="right">{row.Job}</TableCell>
-                <TableCell align="right">{row.Client}</TableCell>
-                <TableCell align="right">{row.Data}</TableCell>
-                <TableCell align="right">{row.Quate}</TableCell>
+                <TableCell align="right">{row.job}</TableCell>
+                <TableCell align="right">{row.client}</TableCell>
+                <TableCell align="right">{row.date}</TableCell>
+                <TableCell align="right">$ {row.quateTotal}</TableCell>
                 <TableCell align="right">
                   <ButtonGroup variant="contained" aria-label="Basic button group">
                     <Button style={{ backgroundColor: 'white', color: 'black' }}>

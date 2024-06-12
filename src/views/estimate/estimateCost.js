@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Row } from 'react-bootstrap';
 import { EstimateHeader } from '../../components/estimate header';
 import { Box } from '@mui/material';
 import CustomContainer from './estimateCostDataContent';
 import { SideBar } from '../../components/estimateSideBar/sideBar';
+import { DataContext } from '../../contexts/DataContext';
 
 const BottomContent = ({ custom = true, title, cost }) => {
   return (
@@ -66,6 +67,7 @@ const EstimateBottom = ({ active }) => {
 
 const EstimateCost = () => {
   const [anEllementChecked, setAnEllementChecked] = useState(false);
+  const { selectedEstimate } = useContext(DataContext);
   return (
     <React.Fragment>
       <Row>
@@ -79,11 +81,11 @@ const EstimateCost = () => {
             marginb: 0
           }}
         >
-          <EstimateHeader active={'Estimate Costings'} />
+          <EstimateHeader active={'Estimate Costings'} estimate={selectedEstimate} />
           <div
             style={{
               display: 'flex',
-              overflow:'auto'
+              overflow: 'auto'
             }}
           >
             <CustomContainer setEllementChecked={setAnEllementChecked} />

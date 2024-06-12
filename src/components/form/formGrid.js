@@ -6,7 +6,7 @@ import { InputFileUpload } from '../button';
 import EstimateVersioningModal from '../modal/estimateVerionModal';
 import AssignedLeadModal from '../modal/assigneLead';
 
-export const FormGrid = () => {
+export const FormGrid = ({estimate}) => {
   return (
     <div style={{ width: '100%' }}>
       <Card>
@@ -19,22 +19,22 @@ export const FormGrid = () => {
           <Form>
             <Form.Group className="mb-3" controlId="formGridAddress1">
               <Form.Label>Reference Number</Form.Label>
-              <Form.Control value="Q1234" />
+              <Form.Control value={estimate.id} />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formGridAddress2">
               <Form.Label>Estimate Name/Description</Form.Label>
-              <Form.Control value="Untitled Estimate" />
+              <Form.Control value={estimate.desc} />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formGridAddress2">
               <Form.Label>Created</Form.Label>
-              <Form.Control value="Untitled Estimate" />
+              <Form.Control value={estimate.date} />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formGridAddress2">
               <Form.Label>Building Type</Form.Label>
-              <Form.Control value="Duplex" />
+              <Form.Control value={estimate.buildType} />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formGridAddress2">
@@ -102,7 +102,7 @@ export const FormWorkLocation = () => {
   );
 };
 
-export const ClientDetail = ({ isSmallScreen }) => {
+export const ClientDetail = ({ isSmallScreen, estimate }) => {
   return (
     <div style={{ width: isSmallScreen ? '100%' : '50%' }}>
       <Card>
@@ -116,7 +116,7 @@ export const ClientDetail = ({ isSmallScreen }) => {
             <Form.Group className="mb-3" controlId="formGridAddress1">
               <Form.Label>Name</Form.Label>
               <Form.Control as="select">
-                <option>Unassigned 1</option>
+                <option>{estimate.client}</option>
               </Form.Control>
             </Form.Group>
 

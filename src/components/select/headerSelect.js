@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const HeaderSelect = () => {
+const HeaderSelect = ({title, status}) => {
   const options = [
-    { value: 'Unititled Estimate', status: 'Not Send' },
+    { value: title, status: status },
     { value: 'Set status to', status: 'Draft' },
     { value: 'Set status to', status: 'In Progress' }
   ];

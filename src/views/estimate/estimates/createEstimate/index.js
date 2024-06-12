@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row } from 'react-bootstrap';
-import { Button, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import { CustomCard } from '../../../../components/Card/card';
 import { FaHome, FaSimCard, FaPlug, FaUtensils } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +15,7 @@ const CreateEstimate = () => {
         <p style={{ color: 'gray', width: '50%' }}>
           Select a template to start creating your estimate. All templates are customizable to help you get quotes out quickly
         </p>
-        <div
+        {/* <div
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -31,7 +31,7 @@ const CreateEstimate = () => {
             <Button variant='contained'>Create blank estimate</Button>
             <Button variant='contained'>Default template</Button>
           </Stack>
-        </div>
+        </div> */}
         <h4 style={{ fontWeight: 'bold', paddingBottom: '16px', marginTop: '24px', marginBottom: '16px' }}>Step Associates template (6)</h4>
         <Stack direction={'column'} spacing={3}>
           <CustomCard
